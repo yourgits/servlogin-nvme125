@@ -27,7 +27,7 @@ async def login(username, password, panel):
     global browser
 
     page = None  # 确保 page 在任何情况下都被定义
-    serviceName = 'ct8' if 'ct8' in panel else 'webhostmost.com'
+    serviceName = 'ct8' if 'ct8' in panel else 'server8.webhostmost.com:2222/evo/'
     try:
         if not browser:
             browser = await launch(headless=True, args=['--no-sandbox', '--disable-setuid-sandbox'])
@@ -36,12 +36,12 @@ async def login(username, password, panel):
         url = f'https://{panel}/login/'
         await page.goto(url)
 
-        username_input = await page.querySelector('#inputEmail')
+        username_input = await page.querySelector('#username')
         if username_input:
             await page.evaluate('''(input) => input.value = ""''', username_input)
 
-        await page.type('#inputEmail', username)
-        await page.type('#inputPassword', password)
+        await page.type('#username', username)
+        await page.type('#password', password)
 
         login_button = await page.querySelector('#submit')
         if login_button:
